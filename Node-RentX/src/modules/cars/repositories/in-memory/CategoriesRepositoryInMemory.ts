@@ -5,17 +5,26 @@ import {
 } from '../ICategoriesRepository';
 
 class CategoriesRepositoryInMemory implements ICategoriesRepository {
-  // Parei aos 31 min bau
+  categories: Category[] = [];
 
-  create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    return Promise.resolve(undefined);
+  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+    const category = new Category();
+    Object.assign(category, {
+      name,
+      description,
+    });
+    this.categories.push(category);
   }
 
-  findByName(Name: string): Promise<Category> {
-    return Promise.resolve(undefined);
+  async findByName(name: string): Promise<Category> {
+    const category = this.categories.find((category) => category.name === name);
+    return category;
   }
 
-  list(): Promise<Category[]> {
-    return Promise.resolve([]);
+  async list(): Promise<Category[]> {
+    const all = this.categories;
+    return all;
   }
 }
+
+export { CategoriesRepositoryInMemory };
